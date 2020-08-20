@@ -12,7 +12,7 @@
         <param name="length" value="0.7"/>
     </node>
 
-	<node ns="node2" pkg="nodelet" clear_params="true" type="nodelet" name="aruco_detect" args="load aruco_pose/aruco_detect nodelet_manager">
+    <node ns="node2" pkg="nodelet" clear_params="true" type="nodelet" name="aruco_detect" args="load aruco_pose/aruco_detect nodelet_manager">
         <remap from="image_raw" to="/node2/usb_cam/image_rect"/>
         <remap from="camera_info" to="/node2/usb_cam/camera_info"/>
         <param name="length" value="0.7"/>

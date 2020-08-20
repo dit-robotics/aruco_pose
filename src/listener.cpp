@@ -13,8 +13,10 @@ using namespace std;
 
 void markersCallback(const aruco_pose::MarkerArray::ConstPtr& markers)
 {
-  if(!markers->markers.empty()){ 
-    
+  
+if(!markers->markers.empty()){ 
+
+/***
     ROS_INFO("id:%ld",markers->markers[0].id );
 	ROS_INFO("id:%ld",markers->markers[1].id );
 	ROS_INFO("id:%ld",markers->markers[2].id );
@@ -22,15 +24,15 @@ void markersCallback(const aruco_pose::MarkerArray::ConstPtr& markers)
 	ROS_INFO("id:%ld",markers->markers[4].id );
 	ROS_INFO("id:%ld",markers->markers[5].id );
 	ROS_INFO("id:%ld",markers->markers[6].id );
+	ROS_INFO("id:%ld",markers->markers[7].id );
 
-	/***
     ROS_INFO("x:%f",markers->markers[0].pose.position.x );
     ROS_INFO("y:%f",markers->markers[0].pose.position.y );
     ROS_INFO("z:%f",markers->markers[0].pose.position.z );
-    ***/
-   
+***/
+ 
     string Rarray[3][3];  
-    ifstream Rf ("/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/R_matrix"); 
+    ifstream Rf ("/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/R_matrix_L"); 
     if (Rf.is_open()){
         while (! Rf.eof() ) {
 			for (int i = 0; i < 3; i++){
@@ -66,15 +68,17 @@ void markersCallback(const aruco_pose::MarkerArray::ConstPtr& markers)
 	R << R00,R01,R02,
 	R10,R11,R12,
 	R20,R21,R22;
+
 /*** 
     R << 0.00802022, -0.46992044,  0.88267234,  
   	-0.99969089, -0.02454104, -0.00398177,  
   	0.02353281, -0.88236756, -0.46997201;  
 ***/
-    std::cout << R << std::endl;
+ 
+//    std::cout << R << std::endl;
 
-	string tarray[3][1];  
-    ifstream tf ("/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/t_matrix"); 
+    string tarray[3][1];  
+    ifstream tf ("/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/t_matrix_L"); 
     if (tf.is_open()){
         while (! tf.eof() ) {
 			for (int i = 0; i < 3; i++){			
@@ -93,16 +97,17 @@ void markersCallback(const aruco_pose::MarkerArray::ConstPtr& markers)
 	MatrixXf t(3,1);
 	t << t00,
 	t10,
-	t20,
+	t20;
+
 /***
     t << -33.5440957,
 	1496.97146057,
 	457.92227559;
 ***/
-	std::cout << t << std::endl;
-
-	ROS_INFO("id:%ld",markers->markers[0].id );
-	ROS_INFO("id:%ld",markers->markers[1].id );
+//	std::cout << t << std::endl;
+/***
+	ROS_INFO("id1:%ld",markers->markers[0].id );
+	ROS_INFO("id2:%ld",markers->markers[1].id );
 
     MatrixXf A1(3,1);  
     A1 << markers->markers[0].pose.position.x,  
@@ -121,7 +126,30 @@ void markersCallback(const aruco_pose::MarkerArray::ConstPtr& markers)
 	//std::cout << R*A1 + t << std::endl;
     std::cout << A11.transpose() << std::endl;
 	std::cout << A22.transpose() << std::endl;
- 
+ ***/
+
+	if(markers->markers[0].id == 2 || markers->markers[0].id == 70){
+			ROS_INFO("id11 : %ld",markers->markers[0].id );			
+			MatrixXf A1(3,1);  
+			A1 << markers->markers[0].pose.position.x,  
+			markers->markers[0].pose.position.y,   
+			markers->markers[0].pose.position.z; 
+			MatrixXf A11(3,1);
+			A11 = R*A1 + t;
+			std::cout << A11.transpose() << std::endl;
+		}
+
+		if(markers->markers[1].id == 2 || markers->markers[1].id == 70){
+			ROS_INFO("id12 : %ld",markers->markers[1].id );			
+			MatrixXf A2(3,1);  
+			A2 << markers->markers[1].pose.position.x,  
+			markers->markers[1].pose.position.y,   
+			markers->markers[1].pose.position.z; 
+			MatrixXf A12(3,1);
+			A12 = R*A2 + t;
+			std::cout << A12.transpose() << std::endl;
+		}
+	
   }
 
   else{

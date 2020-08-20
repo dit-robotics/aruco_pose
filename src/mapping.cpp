@@ -21,7 +21,7 @@ void callback(const aruco_pose::MarkerArray::ConstPtr& markers1, const aruco_pos
 {
 		
 		string Rarray[3][3];  
-		ifstream Rf ("/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/R_matrix"); 
+		ifstream Rf ("/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/R_matrix_L"); 
 		if (Rf.is_open()){
 		    while (! Rf.eof() ) {
 				for (int i = 0; i < 3; i++){
@@ -52,7 +52,7 @@ void callback(const aruco_pose::MarkerArray::ConstPtr& markers1, const aruco_pos
 		//std::cout << R << std::endl;
 
 		string tarray[3][1];  
-		ifstream tf ("/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/t_matrix"); 
+		ifstream tf ("/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/t_matrix_L"); 
 		if (tf.is_open()){
 		    while (! tf.eof() ) {
 				for (int i = 0; i < 3; i++){			

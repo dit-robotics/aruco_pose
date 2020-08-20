@@ -44,7 +44,7 @@ def callback(data):
 	
 	A = np.mat([[data.markers[a].pose.position.x,data.markers[b].pose.position.x,data.markers[c].pose.position.x,data.markers[d].pose.position.x,data.markers[e].pose.position.x,data.markers[f].pose.position.x,data.markers[g].pose.position.x,data.markers[h].pose.position.x],[data.markers[a].pose.position.y,data.markers[b].pose.position.y,data.markers[c].pose.position.y,data.markers[d].pose.position.y,data.markers[e].pose.position.y,data.markers[f].pose.position.y,data.markers[g].pose.position.y,data.markers[h].pose.position.y],[data.markers[a].pose.position.z,data.markers[b].pose.position.z,data.markers[c].pose.position.z,data.markers[d].pose.position.z,data.markers[e].pose.position.z,data.markers[f].pose.position.z,data.markers[g].pose.position.z,data.markers[h].pose.position.z]])	
 	
-	B = np.mat([[1145,1355,1145,1355,1145,1355,1145,1355],[966.3,966.3,1263.3,1263.3,1736.7,1736.7,2033.7,2033.7],[-510,-510,-510,-510,-510,-510,-510,-510]])	
+	B = np.mat([[1145,1355,1145,1355,1145,1355,1145,1355],[966.3,966.3,1263.3,1263.3,1736.7,1736.7,669.3,669.3],[-510,-510,-510,-510,-510,-510,-510,-510]])	
 
 	print(A)
 	print(B)
@@ -53,11 +53,11 @@ def callback(data):
         print(R)
         print(t)
 
-	with open('/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/R_matrix_L','wb') as f1:
+	with open('/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/R_matrix_R','wb') as f1:
             for line in R:
         	np.savetxt(f1, line, fmt='%.8f')
 
-	with open('/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/t_matrix_L','wb') as f2:
+	with open('/home/ubuntu/catkin_ws/src/clever/aruco_pose/cfg/t_matrix_R','wb') as f2:
             for line in t:
         	np.savetxt(f2, line, fmt='%.8f')
 	
@@ -75,7 +75,7 @@ def listener():
 
     rospy.init_node('listener', anonymous=True)
 
-    rospy.Subscriber("aruco_detect/markers",MarkerArray , callback)
+    rospy.Subscriber("/cam_R/aruco_detect/markers",MarkerArray , callback)
 
     rospy.spin()
 

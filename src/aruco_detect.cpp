@@ -77,10 +77,18 @@ private:
 	cv::Ptr<cv::aruco::Dictionary> dictionary_;
 	cv::Ptr<cv::aruco::DetectorParameters> parameters_;
 	image_transport::Publisher debug_pub_;
-	//image_transport::CameraSubscriber img_sub_;
+
+
+
+
+//	image_transport::CameraSubscriber img_sub_;
+
 	message_filters::Subscriber<Image> image_sub_;
 	message_filters::Subscriber<CameraInfo> info_sub_;
 	boost::shared_ptr<message_filters::Synchronizer<SyncPolicy> > sync_;
+
+
+
 	ros::Publisher markers_pub_, vis_markers_pub_;
 	ros::Subscriber map_markers_sub_;
 	bool estimate_poses_, send_tf_, auto_flip_;
@@ -127,7 +135,12 @@ public:
 		debug_pub_ = it_priv.advertise("debug", 1);
 		markers_pub_ = nh_priv_.advertise<aruco_pose::MarkerArray>("markers", 1);
 		vis_markers_pub_ = nh_priv_.advertise<visualization_msgs::MarkerArray>("visualization", 1);
-		//img_sub_ = it.subscribeCamera("image_raw", 1, &ArucoDetect::imageCallback, this);
+
+
+
+//		img_sub_ = it.subscribeCamera("image_raw", 1, &ArucoDetect::imageCallback, this);
+
+
 
 		dyn_srv_ = std::make_shared<dynamic_reconfigure::Server<aruco_pose::DetectorConfig>>(nh_priv_);
 		dynamic_reconfigure::Server<aruco_pose::DetectorConfig>::CallbackType cb;
@@ -142,6 +155,7 @@ public:
 
 		sync_.reset(new message_filters::Synchronizer<SyncPolicy>(SyncPolicy(10), image_sub_, info_sub_));
 		sync_->registerCallback(boost::bind(&ArucoDetect::imageCallback, this, _1, _2));
+
 	}
 
 private:

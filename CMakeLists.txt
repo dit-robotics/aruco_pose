@@ -150,6 +150,7 @@ include_directories(
 add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
 add_dependencies(listener aruco_pose_gencpp)
+
 add_executable(mapping src/mapping.cpp)
 target_link_libraries(mapping ${catkin_LIBRARIES})
 add_dependencies(mapping aruco_pose_gencpp)
@@ -157,6 +158,15 @@ add_dependencies(mapping aruco_pose_gencpp)
 add_executable(mapping_class src/mapping_class.cpp)
 target_link_libraries(mapping_class ${catkin_LIBRARIES})
 add_dependencies(mapping_class aruco_pose_gencpp)
+
+add_executable(mapping_class_multi src/mapping_class_multi.cpp)
+target_link_libraries(mapping_class_multi ${catkin_LIBRARIES})
+add_dependencies(mapping_class_multi aruco_pose_gencpp)
+
+add_executable(speedtest src/speedtest.cpp)
+target_link_libraries(speedtest ${catkin_LIBRARIES})
+add_dependencies(speedtest aruco_pose_gencpp)
+
 
 
 
